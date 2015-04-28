@@ -87,10 +87,18 @@
       <Name>OShop</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
-    <Folder Include="Views\" />
+    <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Handlers\OShopPaypalSettingsPartHandler.cs" />
+    <Compile Include="Models\OShopPaypalSettingsPart.cs" />
+    <Compile Include="Models\PaypalSettings.cs" />
+    <Compile Include="Navigation\AdminMenu.cs" />
+    <Compile Include="Services\IPaypalSettingsService.cs" />
+    <Compile Include="Services\PaypalSettingsService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Settings\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
