@@ -1,9 +1,9 @@
-﻿Name: OShop.PayPal
+﻿Name: OShop PayPal
 AntiForgery: enabled
-Author: The Orchard Team
+Author: Codinlab
 Website: https://github.com/OShop/OShop.PayPal
 Version: 1.0
 OrchardVersion: 1.8
-Category: Commerce
 Description: PayPal payment for OShop.
 Dependencies: OShop, OShop.Payment
+Category: Commerce
