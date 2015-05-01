@@ -48,10 +48,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\newtonsoft.json\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ComponentModel.DataAnnotations">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\aspnetwebapi\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -91,11 +100,21 @@
   <ItemGroup>
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Handlers\OShopPaypalSettingsPartHandler.cs" />
+    <Compile Include="Models\Api\AccessToken.cs" />
+    <Compile Include="Models\Api\Amount.cs" />
+    <Compile Include="Models\Api\AmountDetails.cs" />
+    <Compile Include="Models\Api\Item.cs" />
+    <Compile Include="Models\Api\ItemList.cs" />
+    <Compile Include="Models\Api\Payer.cs" />
+    <Compile Include="Models\Api\Payment.cs" />
+    <Compile Include="Models\Api\RedirectUrls.cs" />
+    <Compile Include="Models\Api\Transaction.cs" />
     <Compile Include="Models\OShopPaypalSettingsPart.cs" />
     <Compile Include="Models\PaypalSettings.cs" />
     <Compile Include="Navigation\AdminMenu.cs" />
     <Compile Include="Services\IPaypalSettingsService.cs" />
     <Compile Include="Services\PaypalSettingsService.cs" />
+    <Compile Include="Utils\TwoDecimalDigitsConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Settings\Index.cshtml" />
