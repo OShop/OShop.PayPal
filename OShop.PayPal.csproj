@@ -110,6 +110,7 @@
     <Compile Include="Models\Api\RedirectUrls.cs" />
     <Compile Include="Models\Api\Transaction.cs" />
     <Compile Include="Models\OShopPaypalSettingsPart.cs" />
+    <Compile Include="Models\PaymentContext.cs" />
     <Compile Include="Models\PaypalSettings.cs" />
     <Compile Include="Navigation\AdminMenu.cs" />
     <Compile Include="Services\IPaypalSettingsService.cs" />
