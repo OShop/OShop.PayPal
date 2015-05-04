@@ -103,6 +103,7 @@
     <Compile Include="Models\Api\AccessToken.cs" />
     <Compile Include="Models\Api\Amount.cs" />
     <Compile Include="Models\Api\AmountDetails.cs" />
+    <Compile Include="Models\Api\Link.cs" />
     <Compile Include="Models\Api\Item.cs" />
     <Compile Include="Models\Api\ItemList.cs" />
     <Compile Include="Models\Api\Payer.cs" />

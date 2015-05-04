@@ -33,6 +33,9 @@ namespace OShop.PayPal.Models.Api {
 
         [JsonProperty("experience_profile_id", NullValueHandling = NullValueHandling.Ignore)]
         public string ExperienceProfileId { get; set; }
+
+        [JsonProperty("links", NullValueHandling = NullValueHandling.Ignore)]
+        public List<Link> Links { get; set; }
     }
 
     public enum PaymentIntent {
