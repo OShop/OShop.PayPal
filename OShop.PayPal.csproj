@@ -114,7 +114,9 @@
     <Compile Include="Models\PaymentContext.cs" />
     <Compile Include="Models\PaypalSettings.cs" />
     <Compile Include="Navigation\AdminMenu.cs" />
+    <Compile Include="Services\IPaypalApiService.cs" />
     <Compile Include="Services\IPaypalSettingsService.cs" />
+    <Compile Include="Services\PaypalApiService.cs" />
     <Compile Include="Services\PaypalSettingsService.cs" />
     <Compile Include="Utils\TwoDecimalDigitsConverter.cs" />
   </ItemGroup>
