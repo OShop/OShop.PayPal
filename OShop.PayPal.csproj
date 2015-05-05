@@ -98,7 +98,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Handlers\OShopPaypalSettingsPartHandler.cs" />
     <Compile Include="Models\Api\AccessToken.cs" />
     <Compile Include="Models\Api\Amount.cs" />
@@ -121,7 +121,7 @@
     <Compile Include="Utils\TwoDecimalDigitsConverter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Settings\Index.cshtml" />
+    <Content Include="Views\Admin\Settings.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

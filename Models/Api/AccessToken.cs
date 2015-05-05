@@ -5,7 +5,7 @@ namespace OShop.PayPal.Models.Api {
         [JsonProperty("scope", NullValueHandling = NullValueHandling.Ignore)]
         public string Scope { get; set; }
         [JsonProperty("access_token", NullValueHandling = NullValueHandling.Ignore)]
-        public string AccessToken { get; set; }
+        public string Token { get; set; }
         [JsonProperty("token_type", NullValueHandling = NullValueHandling.Ignore)]
         public string TokenType { get; set; }
         [JsonProperty("expires_in", NullValueHandling = NullValueHandling.Ignore)]

@@ -89,7 +89,7 @@ namespace OShop.PayPal.Services {
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             if (Token != null) {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token.TokenType, Token.AccessToken);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token.TokenType, Token.Token);
             }
 
             return client;
@@ -109,7 +109,7 @@ namespace OShop.PayPal.Services {
 
                 if (token != null) {
                     // Set authorization header for further requests
-                    Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token.TokenType, token.AccessToken);
+                    Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token.TokenType, token.Token);
                 }
 
                 return token;
