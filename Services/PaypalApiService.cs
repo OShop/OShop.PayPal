@@ -1,5 +1,6 @@
 ﻿using Orchard;
 using Orchard.Localization;
+using Orchard.Services;
 using OShop.PayPal.Models;
 using OShop.PayPal.Models.Api;
 using System;
@@ -14,7 +15,10 @@ namespace OShop.PayPal.Services {
         public const string SandboxEndpoint = "https://api.sandbox.paypal.com/";
         public const string LiveEndpoint = "https://api.paypal.com/";
 
-        public PaypalApiService() {
+        private readonly IClock _clock;
+
+        public PaypalApiService(IClock clock) {
+            _clock = clock;
             T = NullLocalizer.Instance;
         }
 
@@ -41,6 +45,7 @@ namespace OShop.PayPal.Services {
                         return new PaymentContext() {
                             UseSandbox = Settings.UseSandbox,
                             Payment = createdPayment,
+                            ValidUntil = _clock.UtcNow.AddSeconds(token.ExpiresIn),
                             Token = token
                         };
                     }
