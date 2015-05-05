@@ -60,6 +60,9 @@ namespace OShop.PayPal.Services {
         }
 
         public async Task<PaymentContext> ExecutePayment(PaymentContext PaymentCtx, string PayerId) {
+            if (PaymentCtx == null || PaymentCtx.ValidUntil < _clock.UtcNow) {
+                throw new OrchardException(T("Invalid PaymentContext."));
+            }
             using (var client = CreateClient(PaymentCtx.UseSandbox, PaymentCtx.Token)) {
                 try {
                     var response = await client.PostAsJsonAsync("v1/payments/payment/" + PaymentCtx.Payment.Id + "/execute", new { payer_id = PayerId });
