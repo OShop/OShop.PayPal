@@ -99,6 +99,7 @@
   <ItemGroup />
   <ItemGroup>
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Handlers\OShopPaypalSettingsPartHandler.cs" />
     <Compile Include="Models\Api\AccessToken.cs" />
     <Compile Include="Models\Api\Amount.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Services\IPaypalApiService.cs" />
     <Compile Include="Services\IPaypalSettingsService.cs" />
     <Compile Include="Services\PaypalApiService.cs" />
+    <Compile Include="Services\PaypalPaymentProvider.cs" />
     <Compile Include="Services\PaypalSettingsService.cs" />
     <Compile Include="Utils\TwoDecimalDigitsConverter.cs" />
   </ItemGroup>

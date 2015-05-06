@@ -14,8 +14,8 @@ namespace OShop.PayPal.Models.Api {
         
         [JsonProperty("transactions", Required = Required.Always)]
         public List<Transaction> Transactions { get; set; }
-        
-        [JsonProperty("redirect_urls", Required = Required.Always)]
+
+        [JsonProperty("redirect_urls", NullValueHandling = NullValueHandling.Ignore)]
         public RedirectUrls RedirectUrls { get; set; }
         
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]

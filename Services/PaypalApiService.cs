@@ -35,7 +35,7 @@ namespace OShop.PayPal.Services {
             }
         }
 
-        public async Task<PaymentContext> CreatePayment(Payment Payment, PaypalSettings Settings) {
+        public async Task<PaymentContext> CreatePaymentAsync(Payment Payment, PaypalSettings Settings) {
             using (var client = CreateClient(Settings.UseSandbox)) {
                 try {
                     var token = await GetAccessTokenAsync(client, Settings);
@@ -59,7 +59,7 @@ namespace OShop.PayPal.Services {
             }
         }
 
-        public async Task<PaymentContext> ExecutePayment(PaymentContext PaymentCtx, string PayerId) {
+        public async Task<PaymentContext> ExecutePaymentAsync(PaymentContext PaymentCtx, string PayerId) {
             if (PaymentCtx == null || PaymentCtx.ValidUntil < _clock.UtcNow) {
                 throw new OrchardException(T("Invalid PaymentContext."));
             }

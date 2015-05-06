@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace OShop.PayPal.Services {
     public interface IPaypalApiService : IDependency {
         Task<bool> ValidateCredentialsAsync(PaypalSettings Settings);
-        Task<PaymentContext> CreatePayment(Payment Payment, PaypalSettings Settings);
-        Task<PaymentContext> ExecutePayment(PaymentContext PaymentCtx, string PayerId);
+        Task<PaymentContext> CreatePaymentAsync(Payment Payment, PaypalSettings Settings);
+        Task<PaymentContext> ExecutePaymentAsync(PaymentContext PaymentCtx, string PayerId);
     }
 }
