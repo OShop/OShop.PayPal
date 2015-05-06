@@ -15,7 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace OShop.PayPal.Controllers
@@ -25,7 +24,6 @@ namespace OShop.PayPal.Controllers
         private readonly IPaymentService _paymentService;
         private readonly ICurrencyProvider _currencyProvider;
         private readonly IPaypalApiService _apiService;
-        private readonly IPaypalSettingsService _settingsService;
         private readonly IClock _clock;
         private readonly ISiteService _siteService;
 
@@ -33,14 +31,12 @@ namespace OShop.PayPal.Controllers
             IPaymentService paymentService,
             ICurrencyProvider currencyProvider,
             IPaypalApiService apiService,
-            IPaypalSettingsService settingsService,
             IClock clock,
             ISiteService siteService,
             IOrchardServices services) {
             _paymentService = paymentService;
             _currencyProvider = currencyProvider;
             _apiService = apiService;
-            _settingsService = settingsService;
             _clock = clock;
             _siteService = siteService;
             Services = services;
@@ -67,10 +63,8 @@ namespace OShop.PayPal.Controllers
                 return Redirect(Url.ItemDisplayUrl(paymentPart));
             }
 
-            var paypalSettings = _settingsService.GetSettings();
-
             var transaction = new PaymentTransactionRecord() {
-                Method = "PayPal" + (paypalSettings.UseSandbox ? " #SANDBOX#" : ""),
+                Method = "PayPal",
                 Amount = OutstandingAmount,
                 Date = _clock.UtcNow,
                 Status = TransactionStatus.Pending
@@ -78,9 +72,18 @@ namespace OShop.PayPal.Controllers
 
             _paymentService.AddTransaction(paymentPart, transaction);
 
-            string baseUrl = _siteService.GetSiteSettings().BaseUrl.TrimEnd(new char[] {' ', '/'});
+            var siteSettings = _siteService.GetSiteSettings();
+            string baseUrl = siteSettings.BaseUrl.TrimEnd(new char[] {' ', '/'});
 
             try {
+                // Create web profile
+                string webProfileId = await _apiService.CreateWebProfile(new WebProfile() {
+                    // Ensure unique name
+                    Name = paymentPart.Reference + "_" + transaction.Id,
+                    InputFields = new InputFields() { allow_note = false, NoShipping = 1 },
+                    Presentation = new Presentation() { BrandName = siteSettings.SiteName }
+                });
+                // Create payment
                 var paymentCtx = await _apiService.CreatePaymentAsync(new Payment() {
                         Intent = PaymentIntent.Sale,
                         Payer = new Payer() { PaymentMethod = PaymentMethod.Paypal },
@@ -96,9 +99,9 @@ namespace OShop.PayPal.Controllers
                         RedirectUrls = new RedirectUrls() {
                             ReturnUrl = baseUrl + Url.Action("Execute", new { id = transaction.Id }),
                             CancelUrl = baseUrl + Url.Action("Cancel", new { id = transaction.Id })
-                        }
-                    },
-                    paypalSettings);
+                        },
+                        ExperienceProfileId = webProfileId
+                    });
 
                 if (paymentCtx != null && paymentCtx.Payment.State == PaymentState.Created) {
                     string approvalUrl = paymentCtx.Payment.Links.Where(lnk => lnk.Relation == "approval_url").Select(lnk => lnk.Href).FirstOrDefault();
@@ -107,6 +110,9 @@ namespace OShop.PayPal.Controllers
                     }
                     transaction.TransactionId = paymentCtx.Payment.Id;
                     transaction.Data = JsonConvert.SerializeObject(paymentCtx);
+                    if (paymentCtx.UseSandbox) {
+                        transaction.Method += " #SANDBOX#";
+                    }
                     _paymentService.UpdateTransaction(transaction);
                     return Redirect(approvalUrl);
                 }

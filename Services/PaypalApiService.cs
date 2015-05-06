@@ -15,9 +15,23 @@ namespace OShop.PayPal.Services {
         public const string SandboxEndpoint = "https://api.sandbox.paypal.com/";
         public const string LiveEndpoint = "https://api.paypal.com/";
 
+        private AccessToken _token;
+        private PaypalSettings _settings;
+
+        private PaypalSettings Settings {
+            get {
+                _settings = _settings ?? _settingsService.GetSettings();
+                return _settings;
+            }
+        }
+
+        private readonly IPaypalSettingsService _settingsService;
         private readonly IClock _clock;
 
-        public PaypalApiService(IClock clock) {
+        public PaypalApiService(
+            IPaypalSettingsService settingsService,
+            IClock clock) {
+            _settingsService = settingsService;
             _clock = clock;
             T = NullLocalizer.Instance;
         }
@@ -35,18 +49,18 @@ namespace OShop.PayPal.Services {
             }
         }
 
-        public async Task<PaymentContext> CreatePaymentAsync(Payment Payment, PaypalSettings Settings) {
-            using (var client = CreateClient(Settings.UseSandbox)) {
+        public async Task<PaymentContext> CreatePaymentAsync(Payment Payment) {
+            using (var client = CreateClient(Settings.UseSandbox, _token)) {
                 try {
-                    var token = await GetAccessTokenAsync(client, Settings);
+                    _token = _token ?? await GetAccessTokenAsync(client, Settings);
                     var response = await client.PostAsJsonAsync("v1/payments/payment", Payment);
                     if (response.IsSuccessStatusCode) {
                         var createdPayment = await response.Content.ReadAsAsync<Payment>();
                         return new PaymentContext() {
                             UseSandbox = Settings.UseSandbox,
                             Payment = createdPayment,
-                            ValidUntil = _clock.UtcNow.AddSeconds(token.ExpiresIn),
-                            Token = token
+                            ValidUntil = _clock.UtcNow.AddSeconds(_token.ExpiresIn),
+                            Token = _token
                         };
                     }
                     else {
@@ -80,6 +94,25 @@ namespace OShop.PayPal.Services {
                 }
                 catch (Exception exp) {
                     throw new OrchardException(T("Payment execution failed."), exp);
+                }
+            }
+        }
+
+        public async Task<string> CreateWebProfile(WebProfile Profile) {
+            using (var client = CreateClient(Settings.UseSandbox, _token)) {
+                try {
+                    _token = _token ?? await GetAccessTokenAsync(client, Settings);
+                    var response = await client.PostAsJsonAsync("v1/payment-experience/web-profiles", Profile);
+                    if (response.IsSuccessStatusCode) {
+                        var result = await response.Content.ReadAsAsync<CreateProfileResponse>();
+                        return result.Id;
+                    }
+                    else {
+                        throw new OrchardException(T("Web profile creation failed."));
+                    }
+                }
+                catch (Exception exp) {
+                    throw new OrchardException(T("Web profile creation failed."), exp);
                 }
             }
         }
@@ -123,5 +156,6 @@ namespace OShop.PayPal.Services {
         }
 
         #endregion
+
     }
 }

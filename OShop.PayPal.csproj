@@ -104,13 +104,16 @@
     <Compile Include="Models\Api\AccessToken.cs" />
     <Compile Include="Models\Api\Amount.cs" />
     <Compile Include="Models\Api\AmountDetails.cs" />
+    <Compile Include="Models\Api\InputFields.cs" />
     <Compile Include="Models\Api\Link.cs" />
     <Compile Include="Models\Api\Item.cs" />
     <Compile Include="Models\Api\ItemList.cs" />
     <Compile Include="Models\Api\Payer.cs" />
     <Compile Include="Models\Api\Payment.cs" />
+    <Compile Include="Models\Api\Presentation.cs" />
     <Compile Include="Models\Api\RedirectUrls.cs" />
     <Compile Include="Models\Api\Transaction.cs" />
+    <Compile Include="Models\Api\WebProfile.cs" />
     <Compile Include="Models\OShopPaypalSettingsPart.cs" />
     <Compile Include="Models\PaymentContext.cs" />
     <Compile Include="Models\PaypalSettings.cs" />
