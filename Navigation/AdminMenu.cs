@@ -21,7 +21,7 @@ namespace OShop.PayPal.Navigation {
                         .Caption(T("Settings"))
                         .Add(tab => tab
                             .Caption(T("PayPal"))
-                            .Position("7")
+                            .Position("7.1")
                             .Action("Settings", "Admin", new { area = "OShop.PayPal" })
                             .Permission(OShopPermissions.ManageShopSettings)
                             .LocalNav()
