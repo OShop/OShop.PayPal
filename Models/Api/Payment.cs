@@ -22,14 +22,14 @@ namespace OShop.PayPal.Models.Api {
         public string Id { get; set; }
 
         [JsonProperty("create_time", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime CreateTime { get; set; }
+        public DateTime? CreateTime { get; set; }
 
         [JsonProperty("state", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(StringEnumConverter))]
         public PaymentState State { get; set; }
 
         [JsonProperty("update_time", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime UpdateTime { get; set; }
+        public DateTime? UpdateTime { get; set; }
 
         [JsonProperty("experience_profile_id", NullValueHandling = NullValueHandling.Ignore)]
         public string ExperienceProfileId { get; set; }
