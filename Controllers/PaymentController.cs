@@ -85,23 +85,23 @@ namespace OShop.PayPal.Controllers
                 });
                 // Create payment
                 var paymentCtx = await _apiService.CreatePaymentAsync(new Payment() {
-                        Intent = PaymentIntent.Sale,
-                        Payer = new Payer() { PaymentMethod = PaymentMethod.Paypal },
-                        Transactions = new List<Transaction>() {
-                            new Transaction() {
-                                Amount = new Amount(){
-                                    Total = OutstandingAmount,
-                                    Currency = _currencyProvider.IsoCode
-                                },
-                                Description = paymentPart.Reference + " - " + OutstandingAmount.ToString("C", _currencyProvider.NumberFormat)
-                            }
-                        },
-                        RedirectUrls = new RedirectUrls() {
-                            ReturnUrl = baseUrl + Url.Action("Execute", new { id = transaction.Id }),
-                            CancelUrl = baseUrl + Url.Action("Cancel", new { id = transaction.Id })
-                        },
-                        ExperienceProfileId = webProfileId
-                    });
+                    Intent = PaymentIntent.Sale,
+                    Payer = new Payer() { PaymentMethod = PaymentMethod.Paypal },
+                    Transactions = new List<Transaction>() {
+                        new Transaction() {
+                            Amount = new Amount(){
+                                Total = OutstandingAmount,
+                                Currency = _currencyProvider.IsoCode
+                            },
+                            Description = paymentPart.Reference + " - " + OutstandingAmount.ToString("C", _currencyProvider.NumberFormat)
+                        }
+                    },
+                    RedirectUrls = new RedirectUrls() {
+                        ReturnUrl = baseUrl + Url.Action("Execute", new { id = transaction.Id }),
+                        CancelUrl = baseUrl + Url.Action("Cancel", new { id = transaction.Id })
+                    },
+                    ExperienceProfileId = webProfileId
+                });
 
                 if (paymentCtx != null && paymentCtx.Payment.State == PaymentState.Created) {
                     string approvalUrl = paymentCtx.Payment.Links.Where(lnk => lnk.Relation == "approval_url").Select(lnk => lnk.Href).FirstOrDefault();
