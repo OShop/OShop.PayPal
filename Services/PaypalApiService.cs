@@ -1,5 +1,6 @@
 ﻿using Orchard;
 using Orchard.Localization;
+using Orchard.Logging;
 using Orchard.Services;
 using OShop.PayPal.Models;
 using OShop.PayPal.Models.Api;
@@ -34,9 +35,12 @@ namespace OShop.PayPal.Services {
             _settingsService = settingsService;
             _clock = clock;
             T = NullLocalizer.Instance;
+            Logger = NullLogger.Instance;
         }
 
         public Localizer T { get; set; }
+
+        public ILogger Logger { get; set; }
 
         public async Task<bool> ValidateCredentialsAsync(PaypalSettings Settings) {
             using (var client = CreateClient(Settings.UseSandbox)) {
@@ -64,6 +68,8 @@ namespace OShop.PayPal.Services {
                         };
                     }
                     else {
+                        var errorMsg = await response.Content.ReadAsStringAsync();
+                        Logger.Error("Payment creation failed. ({0}) {1}\r\n{2}", response.StatusCode, response.ReasonPhrase, errorMsg);
                         throw new OrchardException(T("Payment creation failed."));
                     }
                 }
@@ -89,6 +95,8 @@ namespace OShop.PayPal.Services {
                         };
                     }
                     else {
+                        var errorMsg = await response.Content.ReadAsStringAsync();
+                        Logger.Error("Payment execution failed. ({0}) {1}\r\n{2}", response.StatusCode, response.ReasonPhrase, errorMsg);
                         throw new OrchardException(T("Payment execution failed."));
                     }
                 }
