@@ -122,8 +122,10 @@
     <Compile Include="Models\PaypalSettings.cs" />
     <Compile Include="Navigation\AdminMenu.cs" />
     <Compile Include="Services\IPaypalApiService.cs" />
+    <Compile Include="Services\IPaypalConnectionManager.cs" />
     <Compile Include="Services\IPaypalSettingsService.cs" />
     <Compile Include="Services\PaypalApiService.cs" />
+    <Compile Include="Services\PaypalConnectionManager.cs" />
     <Compile Include="Services\PaypalPaymentProvider.cs" />
     <Compile Include="Services\PaypalSettingsService.cs" />
     <Compile Include="Utils\TwoDecimalDigitsConverter.cs" />
