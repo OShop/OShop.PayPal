@@ -13,10 +13,6 @@ using System.Threading.Tasks;
 
 namespace OShop.PayPal.Services {
     public class PaypalApiService : IPaypalApiService {
-        public const string SandboxEndpoint = "https://api.sandbox.paypal.com/";
-        public const string LiveEndpoint = "https://api.paypal.com/";
-
-        private AccessToken _token;
         private PaypalSettings _settings;
 
         private PaypalSettings Settings {
@@ -27,12 +23,15 @@ namespace OShop.PayPal.Services {
         }
 
         private readonly IPaypalSettingsService _settingsService;
+        private readonly IPaypalConnectionManager _connectionManager;
         private readonly IClock _clock;
 
         public PaypalApiService(
             IPaypalSettingsService settingsService,
+            IPaypalConnectionManager connectionManager,
             IClock clock) {
             _settingsService = settingsService;
+            _connectionManager = connectionManager;
             _clock = clock;
             T = NullLocalizer.Instance;
             Logger = NullLogger.Instance;
@@ -42,29 +41,15 @@ namespace OShop.PayPal.Services {
 
         public ILogger Logger { get; set; }
 
-        public async Task<bool> ValidateCredentialsAsync(PaypalSettings Settings) {
-            using (var client = CreateClient(Settings.UseSandbox)) {
-                try {
-                    return await GetAccessTokenAsync(client, Settings) != null;
-                }
-                catch {
-                    return false;
-                }
-            }
-        }
-
         public async Task<PaymentContext> CreatePaymentAsync(Payment Payment) {
-            using (var client = CreateClient(Settings.UseSandbox, _token)) {
+            using (var client = await _connectionManager.CreateClientAsync(Settings)) {
                 try {
-                    _token = _token ?? await GetAccessTokenAsync(client, Settings);
                     var response = await client.PostAsJsonAsync("v1/payments/payment", Payment);
                     if (response.IsSuccessStatusCode) {
                         var createdPayment = await response.Content.ReadAsAsync<Payment>();
                         return new PaymentContext() {
                             UseSandbox = Settings.UseSandbox,
-                            Payment = createdPayment,
-                            ValidUntil = _clock.UtcNow.AddSeconds(_token.ExpiresIn),
-                            Token = _token
+                            Payment = createdPayment
                         };
                     }
                     else {
@@ -80,18 +65,14 @@ namespace OShop.PayPal.Services {
         }
 
         public async Task<PaymentContext> ExecutePaymentAsync(PaymentContext PaymentCtx, string PayerId) {
-            if (PaymentCtx == null || PaymentCtx.ValidUntil < _clock.UtcNow) {
-                throw new OrchardException(T("Invalid PaymentContext."));
-            }
-            using (var client = CreateClient(PaymentCtx.UseSandbox, PaymentCtx.Token)) {
-                try {
+            using (var client = await _connectionManager.CreateClientAsync(Settings)) {
+                    try {
                     var response = await client.PostAsJsonAsync("v1/payments/payment/" + PaymentCtx.Payment.Id + "/execute", new { payer_id = PayerId });
                     if (response.IsSuccessStatusCode) {
                         var executedPayment = await response.Content.ReadAsAsync<Payment>();
                         return new PaymentContext() {
                             UseSandbox = PaymentCtx.UseSandbox,
-                            Payment = executedPayment,
-                            Token = PaymentCtx.Token
+                            Payment = executedPayment
                         };
                     }
                     else {
@@ -107,9 +88,8 @@ namespace OShop.PayPal.Services {
         }
 
         public async Task<string> CreateWebProfile(WebProfile Profile) {
-            using (var client = CreateClient(Settings.UseSandbox, _token)) {
+            using (var client = await _connectionManager.CreateClientAsync(Settings)) {
                 try {
-                    _token = _token ?? await GetAccessTokenAsync(client, Settings);
                     var response = await client.PostAsJsonAsync("v1/payment-experience/web-profiles", Profile);
                     if (response.IsSuccessStatusCode) {
                         var result = await response.Content.ReadAsAsync<CreateProfileResponse>();
@@ -124,46 +104,5 @@ namespace OShop.PayPal.Services {
                 }
             }
         }
-
-        #region Private functions
-        private HttpClient CreateClient(bool UseSandbox, AccessToken Token = null) {
-            var client = new HttpClient();
-            client.BaseAddress = new Uri(UseSandbox ? PaypalApiService.SandboxEndpoint : PaypalApiService.LiveEndpoint);
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            if (Token != null) {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token.TokenType, Token.Token);
-            }
-
-            return client;
-        }
-
-        private async Task<AccessToken> GetAccessTokenAsync(HttpClient Client, PaypalSettings Settings) {
-            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(
-                ASCIIEncoding.ASCII.GetBytes(Settings.ClientId + ":" + Settings.ClientSecret)
-            ));
-
-            var response = await Client.PostAsync("v1/oauth2/token", new FormUrlEncodedContent(new KeyValuePair<string, string>[] {
-                new KeyValuePair<string, string>("grant_type", "client_credentials")
-            }));
-
-            if (response.IsSuccessStatusCode) {
-                var token = await response.Content.ReadAsAsync<AccessToken>();
-
-                if (token != null) {
-                    // Set authorization header for further requests
-                    Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token.TokenType, token.Token);
-                }
-
-                return token;
-            }
-            else {
-                throw new OrchardException(T("Unable to obtain Access Token from PayPal API."));
-            }
-        }
-
-        #endregion
-
     }
 }
