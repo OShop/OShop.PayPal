@@ -150,6 +150,7 @@ namespace OShop.PayPal.Controllers
                     transactionRecord.Data = JsonConvert.SerializeObject(paymentCtx);
                     transactionRecord.Date = _clock.UtcNow;
                     transactionRecord.Status = TransactionStatus.Validated;
+                    transactionRecord.Amount = paymentCtx.Payment.Transactions.Select(t => t.Amount).Where(a => a.Currency == _currencyProvider.IsoCode).Sum(a => a.Total) ;
                     _paymentService.UpdateTransaction(transactionRecord);
                     Services.Notifier.Information(T("Your payment was successfully registered."));
                 }
