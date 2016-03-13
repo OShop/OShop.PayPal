@@ -15,14 +15,14 @@ namespace OShop.PayPal.Controllers
     public class AdminController : Controller
     {
         private readonly IPaypalSettingsService _settingsService;
-        private readonly IPaypalApiService _apiService;
+        private readonly IPaypalConnectionManager _connectionManager;
 
         public AdminController(
             IPaypalSettingsService settingsService,
-            IPaypalApiService apiService,
+            IPaypalConnectionManager connectionManager,
             IOrchardServices services) {
             _settingsService = settingsService;
-            _apiService = apiService;
+            _connectionManager = connectionManager;
             Services = services;
             T = NullLocalizer.Instance;
         }
@@ -61,7 +61,7 @@ namespace OShop.PayPal.Controllers
                 return new HttpUnauthorizedResult();
 
             if (TryUpdateModel(model)) {
-                if (await _apiService.ValidateCredentialsAsync(model)) {
+                if (await _connectionManager.ValidateCredentialsAsync(model.ClientId, model.ClientSecret, model.UseSandbox)) {
                     Services.Notifier.Information(T("Valid credentials."));
                 }
                 else {
