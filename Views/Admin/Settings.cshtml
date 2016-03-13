@@ -15,7 +15,7 @@
         </div>
         <div>
             @Html.LabelFor(m => m.ClientSecret, T("Client secret"))
-            @Html.TextBoxFor(m => m.ClientSecret, new { @class = "text medium" })
+            @Html.TextBoxFor(m => m.ClientSecret, new { type = "password", @class = "text medium" })
             @Html.ValidationMessageFor(m => m.ClientSecret, "*")
         </div>
     </fieldset>
