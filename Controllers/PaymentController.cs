@@ -93,7 +93,15 @@ namespace OShop.PayPal.Controllers
                                 Total = OutstandingAmount,
                                 Currency = _currencyProvider.IsoCode
                             },
-                            Description = paymentPart.Reference + " - " + OutstandingAmount.ToString("C", _currencyProvider.NumberFormat)
+                            Description = paymentPart.Reference + " - " + OutstandingAmount.ToString("C", _currencyProvider.NumberFormat),
+                            ItemList = new ItemList() {
+                                Items = new List<Item>() { new Item() {
+                                    Name = paymentPart.Reference,
+                                    Quantity = 1,
+                                    Currency = _currencyProvider.IsoCode,
+                                    Price = OutstandingAmount
+                                }}
+                            }
                         }
                     },
                     RedirectUrls = new RedirectUrls() {
