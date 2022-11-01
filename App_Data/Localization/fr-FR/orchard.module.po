@@ -1,0 +1,164 @@
+#: OShop.PayPal.Controllers.AdminController
+
+#. "Not allowed to manage Shop Settings"
+msgctxt OShop.PayPal.Controllers.AdminController
+msgid "Not allowed to manage Shop Settings"
+msgstr "Vous n'êtes pas autorisé à gérer les paramètres de la boutique"
+
+#: OShop.PayPal.Controllers.AdminController
+msgctxt OShop.PayPal.Controllers.AdminController
+msgid "PayPal Settings saved successfully."
+msgstr "Paramètres PayPal enregistrés avec succès."
+
+#: OShop.PayPal.Controllers.AdminController
+msgctxt OShop.PayPal.Controllers.AdminController
+msgid "Could not save PayPal Settings."
+msgstr "Impossible d'enregistrer les paramètres PayPal."
+
+#: OShop.PayPal.Controllers.AdminController
+msgctxt OShop.PayPal.Controllers.AdminController
+msgid "Valid credentials."
+msgstr "Authentification valide."
+
+#: OShop.PayPal.Controllers.AdminController
+msgctxt OShop.PayPal.Controllers.AdminController
+msgid "Invalid credentials."
+msgstr "Authentification invalide."
+
+#: OShop.PayPal.Controllers.AdminController
+msgctxt OShop.PayPal.Controllers.AdminController
+msgid "Could not validate credentials."
+msgstr "Impossible de valider l'authentification."
+
+#: OShop.PayPal.Controllers.PaymentController
+msgctxt OShop.PayPal.Controllers.PaymentController
+msgid "Nothing left to pay on this document."
+msgstr "Il ne reste plus rien à régler sur ce document."
+
+#: OShop.PayPal.Controllers.PaymentController
+msgctxt OShop.PayPal.Controllers.PaymentController
+msgid "Payment creation failed."
+msgstr "Création du paiement échouée."
+
+#: OShop.PayPal.Controllers.PaymentController
+
+#. "We are encountering issues with PayPal service."
+msgctxt OShop.PayPal.Controllers.PaymentController
+msgid "We are encountering issues with PayPal service."
+msgstr "Nous rencontrons des difficultés avec le service PayPal."
+
+#: OShop.PayPal.Controllers.PaymentController
+msgctxt OShop.PayPal.Controllers.PaymentController
+msgid "Your payment was successfully registered."
+msgstr "Votre paiement a été enregistré avec succès."
+
+#: OShop.PayPal.Controllers.PaymentController
+
+#. "We were unable to execute your payment."
+msgctxt OShop.PayPal.Controllers.PaymentController
+msgid "We were unable to execute your payment."
+msgstr "Nous n'avons pas été en mesure d'exécuter votre paiement."
+
+#: OShop.PayPal.Controllers.PaymentController
+msgctxt OShop.PayPal.Controllers.PaymentController
+msgid "Your payment has been canceled."
+msgstr "Votre paiement a été annulé."
+
+#: OShop.PayPal.Navigation.AdminMenu
+msgctxt OShop.PayPal.Navigation.AdminMenu
+msgid "OShop"
+msgstr "OShop"
+
+#: OShop.PayPal.Navigation.AdminMenu
+msgctxt OShop.PayPal.Navigation.AdminMenu
+msgid "Settings"
+msgstr "Paramètres"
+
+#: OShop.PayPal.Navigation.AdminMenu
+msgctxt OShop.PayPal.Navigation.AdminMenu
+msgid "PayPal"
+msgstr "PayPal"
+
+#: OShop.PayPal.Services.PaypalApiService
+
+#. "Payment creation failed."
+msgctxt OShop.PayPal.Services.PaypalApiService
+msgid "Payment creation failed."
+msgstr "Création du paiement échouée."
+
+#: OShop.PayPal.Services.PaypalApiService
+
+#. "Payment execution failed."
+msgctxt OShop.PayPal.Services.PaypalApiService
+msgid "Payment execution failed."
+msgstr "Exécution du paiement échouée."
+
+#: OShop.PayPal.Services.PaypalApiService
+
+#. "Web profile creation failed."
+msgctxt OShop.PayPal.Services.PaypalApiService
+msgid "Web profile creation failed."
+msgstr "Création profil web échouée."
+
+#: OShop.PayPal.Services.PaypalConnectionManager
+
+#. "Unable to obtain Access Token from PayPal API."
+msgctxt OShop.PayPal.Services.PaypalConnectionManager
+msgid "Unable to obtain Access Token from PayPal API."
+msgstr "Impossible d'obtenir un token d'accès de la part de PayPal."
+
+#: OShop.PayPal.Services.PaypalPaymentProvider
+msgctxt OShop.PayPal.Services.PaypalPaymentProvider
+msgid "PayPal"
+msgstr "Carte bancaire ou PayPal"
+
+#: OShop.PayPal.Services.PaypalPaymentProvider
+msgctxt OShop.PayPal.Services.PaypalPaymentProvider
+msgid "Pay with your PayPal account or credit card"
+msgstr "Régler avec votre carte bancaire ou votre compte PayPal"
+
+#: ~/Modules/OShop.PayPal/Views/Admin/Settings.cshtml
+msgctxt ~/Modules/OShop.PayPal/Views/Admin/Settings.cshtml
+msgid "PayPal Settings"
+msgstr "Paramètre PayPal"
+
+#: ~/Modules/OShop.PayPal/Views/Admin/Settings.cshtml
+msgctxt ~/Modules/OShop.PayPal/Views/Admin/Settings.cshtml
+msgid "PayPal Account"
+msgstr "Compte PayPal"
+
+#: ~/Modules/OShop.PayPal/Views/Admin/Settings.cshtml
+msgctxt ~/Modules/OShop.PayPal/Views/Admin/Settings.cshtml
+msgid "Client ID"
+msgstr "Client ID"
+
+#: ~/Modules/OShop.PayPal/Views/Admin/Settings.cshtml
+msgctxt ~/Modules/OShop.PayPal/Views/Admin/Settings.cshtml
+msgid "Client secret"
+msgstr "Client secret"
+
+#: ~/Modules/OShop.PayPal/Views/Admin/Settings.cshtml
+msgctxt ~/Modules/OShop.PayPal/Views/Admin/Settings.cshtml
+msgid "Test mode"
+msgstr "Mode test"
+
+#: ~/Modules/OShop.PayPal/Views/Admin/Settings.cshtml
+msgctxt ~/Modules/OShop.PayPal/Views/Admin/Settings.cshtml
+msgid "Use sandbox"
+msgstr "Utiliser l'environnement sandbox"
+
+#: ~/Modules/OShop.PayPal/Views/Admin/Settings.cshtml
+msgctxt ~/Modules/OShop.PayPal/Views/Admin/Settings.cshtml
+msgid "For testing purpose only."
+msgstr "Pour test uniquement."
+
+#: ~/Modules/OShop.PayPal/Views/Admin/Settings.cshtml
+msgctxt ~/Modules/OShop.PayPal/Views/Admin/Settings.cshtml
+msgid "Validate credentials"
+msgstr "Valider les paramètres d'authentification"
+
+#: ~/Modules/OShop.PayPal/Views/Admin/Settings.cshtml
+msgctxt ~/Modules/OShop.PayPal/Views/Admin/Settings.cshtml
+msgid "Save"
+msgstr "Enregistrer"
+
