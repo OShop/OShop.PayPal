@@ -110,7 +110,7 @@ msgstr "Impossible d'obtenir un token d'accès de la part de PayPal."
 #: OShop.PayPal.Services.PaypalPaymentProvider
 msgctxt OShop.PayPal.Services.PaypalPaymentProvider
 msgid "PayPal"
-msgstr "Carte bancaire ou PayPal"
+msgstr "PayPal"
 
 #: OShop.PayPal.Services.PaypalPaymentProvider
 msgctxt OShop.PayPal.Services.PaypalPaymentProvider
